@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    
+    <title>React App</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.6.0/redux.js" ></script>
+     <script type="text/javascript">
+        alert('콘솔봐 ! ');
+        
+        const initialState = {
+            number: 1
+        };
+
+        // action 
+        const INCREMENT1 = () => ({
+            type: 'INCREMENT',
+            diff: 1
+        });
+        console.log(INCREMENT1());
+
+        const INCREMENT2 = () => {
+            return {
+                type: 'INCREMENT',
+                diff: 2
+            };
+        }
+        const INCREMENT = (diff) => {
+            return {
+                type: 'INCREMENT',
+                diff: diff
+            };
+        }
+        console.log(INCREMENT2());
+
+        // reducer : 발생 액션의 값을 state에 적용시켜주는 함수 ? , 제어권.. 
+        function counter(state = initialState, action) {
+            switch(action.type){
+                case 'INCREMENT':
+                    return Object.assign({},state, {number: state.number + action.diff });
+                case 'DECREMENT':
+                return Object.assign({},state, {number: state.number -  action.diff });
+                default:
+                    return state;
+            }
+        }
+        console.log('############### result : ')
+        console.log(counter(undefined, INCREMENT1()));
+        console.log(counter(undefined, INCREMENT2()));
+        console.log(counter(undefined, INCREMENT(444)));
+       
+
+        const { createStore } = Redux;
+
+        const store = createStore(counter); //리듀서를 파라미터로 전달해야 스토어 생성 .. 
+
+        const unsubscribe = store.subscribe(() => {
+            console.log("######## 구독: " , store.getState() );
+        });
+        
+        store.dispatch(INCREMENT(2));
+        store.dispatch(INCREMENT(4));
+        store.dispatch(INCREMENT(6));
+
+
+
+
+
+
+
+
+        
+        
+    </script>
+  </head>
+  <body>
+    <div >Test !! </div>
+   
+  </body>
+</html>
